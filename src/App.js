@@ -11,48 +11,36 @@ const Div = styled.div`
   color: #cccccc;
 `;
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      balance: 10000,
-      showBalance: true,
-      coinData: [
-        { balance: 100, name: "Bitcoin", ticker: "BTC", price: 9999.99 },
-        { balance: 10, name: "Ethereum", ticker: "ETH", price: 222.99 },
-        { balance: 1100, name: "Tether", ticker: "USDT", price: 1 },
-        { balance: 1000, name: "Ripple", ticker: "XRP", price: 0.2 },
-      ],
-    };
-    this.handleRefresh = this.handleRefresh.bind(this);
-    this.handleBalanceVisibilityChange =
-      this.handleBalanceVisibilityChange.bind(this);
-  }
-  handleBalanceVisibilityChange() {
+  state = {
+    balance: 10000,
+    showBalance: true,
+    coinData: [
+      { balance: 100, name: "Bitcoin", ticker: "BTC", price: 9999.99 },
+      { balance: 10, name: "Ethereum", ticker: "ETH", price: 222.99 },
+      { balance: 1100, name: "Tether", ticker: "USDT", price: 1 },
+      { balance: 1000, name: "Ripple", ticker: "XRP", price: 0.2 },
+    ],
+  };
+
+  handleBalanceVisibilityChange = () => {
     this.setState(function (oldState) {
       return {
         ...oldState,
         showBalance: !oldState.showBalance,
       };
     });
-  }
-  handleRefresh(valueChangeTicker) {
-    const newCoinData = this.state.coinData.map(
-      ({ ticker, name, price, balance }) => {
-        let newPrice = price;
-        if (valueChangeTicker === ticker) {
-          const randomPercentage = 0.995 + Math.random() * 0.01;
-          newPrice = newPrice * randomPercentage;
-        }
-        return {
-          ticker,
-          name,
-          price: newPrice,
-          balance,
-        };
+  };
+  handleRefresh = (valueChangeTicker) => {
+    const newCoinData = this.state.coinData.map((values) => {
+      let newValues = { ...values };
+      if (valueChangeTicker === newValues.ticker) {
+        const randomPercentage = 0.995 + Math.random() * 0.01;
+        newValues.price *= randomPercentage;
       }
-    );
+      return newValues;
+    });
     this.setState({ coinData: newCoinData });
-  }
+  };
   render() {
     return (
       <Div className="App">
