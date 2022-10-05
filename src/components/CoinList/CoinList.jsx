@@ -24,7 +24,13 @@ export default class CoinList extends Component {
             (
               { name, ticker, price } // Use {} to destruct value
             ) => (
-              <Coin key={ticker} name={name} ticker={ticker} price={price} />
+              <Coin
+                key={ticker}
+                handleRefresh={this.props.handleRefresh}
+                name={name}
+                ticker={ticker}
+                price={price}
+              />
             )
           )}
         </tbody>
