@@ -25,16 +25,17 @@ export default class CoinList extends Component {
         <tbody>
           {this.props.coinData.map(
             (
-              { name, ticker, price, balance } // Use {} to destruct value
+              { key, name, ticker, price, balance } // Use {} to destruct value
             ) => (
               <Coin
-                key={ticker}
+                key={key} // Cannot read it from props
                 handleRefresh={this.props.handleRefresh}
                 name={name}
                 ticker={ticker}
                 balance={balance}
                 price={price}
                 showBalance={this.props.showBalance}
+                tickerId={key} // pass coin.id (a.k.a. key) to Coin
               />
             )
           )}
